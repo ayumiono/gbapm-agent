@@ -1,0 +1,76 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<id>tar</id>
+	<formats>
+		<format>tar.gz</format>
+	</formats>
+	<includeBaseDirectory>true</includeBaseDirectory>
+	<dependencySets>
+		<!-- agent root dir-->
+		<dependencySet>
+			<useProjectArtifact>true</useProjectArtifact>
+			<includes>
+				<include>com.gb.apm:gbapm-bootstrap</include>
+			</includes>
+			<outputDirectory>/</outputDirectory>
+			<scope>compile</scope>
+		</dependencySet>
+		<!-- boot dir -->
+		<dependencySet>
+			<useProjectArtifact>true</useProjectArtifact>
+			<includes>
+				<include>com.gb.apm:gbapm-bootstrap-core</include>
+				<include>com.gb.apm:gbapm-common</include>
+				<include>com.gb.apm:gbapm-annotations</include>
+				<include>com.gb.apm:gbapm-dapper</include>
+			</includes>
+			<outputDirectory>boot</outputDirectory>
+			<scope>compile</scope>
+		</dependencySet>
+		<!-- lib dir -->
+		<dependencySet>
+			<useProjectArtifact>true</useProjectArtifact>
+			<excludes>
+				<exclude>com.gb.apm:gbapm-bootstrap-core</exclude>
+				<exclude>com.gb.apm:gbapm-common</exclude>
+				<exclude>com.gb.apm:gbapm-annotations</exclude>
+				<exclude>com.gb.apm:gbapm-bootstrap</exclude>
+				<exclude>com.gb.apm:gbapm-dapper</exclude>
+				<exclude>com.gb.apm:gbapm-plugins</exclude>
+				<exclude>com.gb.apm:mysql-jdbc</exclude>
+				<exclude>com.gb.apm:dubbo-interceptor</exclude>
+				<exclude>com.gb.apm:common-biz-interceptor</exclude>
+			</excludes>
+			<outputDirectory>lib</outputDirectory>
+			<scope>compile</scope>
+		</dependencySet>
+		<dependencySet>
+			<useProjectArtifact>true</useProjectArtifact>
+			<includes>
+				<include>com.gb.apm:mysql-jdbc</include>
+				<include>com.gb.apm:dubbo-interceptor</include>
+				<include>com.gb.apm:common-biz-interceptor</include>
+			</includes>
+			<outputDirectory>plugin</outputDirectory>
+			<scope>compile</scope>
+		</dependencySet>
+	</dependencySets>
+	<fileSets>
+		<fileSet>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+				<include>README.txt</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>config</directory>
+			<outputDirectory>/</outputDirectory>
+			<includes>
+                <include>pinpoint.config</include>
+            </includes>
+            <fileMode>0644</fileMode>
+		</fileSet>
+	</fileSets>
+</assembly>

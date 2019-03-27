@@ -1,0 +1,31 @@
+filebeat.prospectors:
+- input_type: log
+  paths:
+    - /var/log/ompc/omp_corder.log
+  fields:
+    ip: 192.168.51.206
+    systemName: omp_corder
+  fields_under_root: true
+  document_type: omp_corder
+  tail_files: true
+  multiline.pattern: '^20'
+  multiline.negate: true
+  multiline.match: after
+- input_type: log
+  paths:
+    - /usr/local/test/server/asm_test.log
+  tags: ["kafka_stream"]
+  fields:
+   topic: apm_chain_test
+   key: systemId
+  tail_files: false
+- input_type: log
+  paths:
+    - /usr/local/test/server/jvm_test.log
+  tags: ["kafka_stream"]
+  fields:
+   topic: jvm_metrics_test            #设置kafka topic
+   key: application                    #设置kafka 分片字段
+  tail_files: false
+output.logstash:
+  hosts: ["127.0.0.1:5044"]
